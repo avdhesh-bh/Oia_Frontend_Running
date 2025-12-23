@@ -59,6 +59,12 @@ const Footer = () => {
                   Faculty & Staff
                 </a>
               </li>
+              <li>
+                <a href="/dev-team" 
+                   className="text-slate-300 hover:text-white transition-colors text-sm">
+                  Developing Team of Website
+                </a>
+              </li>
             </ul>
           </div>
 

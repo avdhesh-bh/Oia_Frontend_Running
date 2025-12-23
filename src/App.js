@@ -29,6 +29,7 @@ const Programs = lazy(() => import("./pages/Programs"));
 const ProgramDetail = lazy(() => import("./pages/ProgramDetail"));
 const Contact = lazy(() => import("./pages/Contact"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
+const DevTeam = lazy(() => import("./pages/DevTeam"));
 
 // About OIA pages
 const AboutOIA = lazy(() => import("./pages/AboutOIA/AboutOIA"));
@@ -261,6 +262,9 @@ function App() {
 
                           {/* Search */}
                           <Route path="/search" element={<Search />} />
+
+                          {/* Dev Team */}
+                          <Route path="/dev-team" element={<DevTeam />} />
 
                           {/* 404 - Redirect to home with search */}
                           <Route
