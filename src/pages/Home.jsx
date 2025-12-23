@@ -113,7 +113,7 @@ const Home = () => {
                 <Loader2 className="h-8 w-8 animate-spin text-[#283887]" />
               </div>
             ) : stats ? (
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-[#283887] mb-2">{stats.totalPrograms || 0}</div>
                   <div className="text-sm text-slate-600">Programs</div>
@@ -137,10 +137,6 @@ const Home = () => {
                 <div className="text-center">
                   <div className="text-3xl font-bold text-[#283887] mb-2">{stats.totalEvents || 0}</div>
                   <div className="text-sm text-slate-600">Events</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-[#283887] mb-2">{stats.internationalStudents || 0}</div>
-                  <div className="text-sm text-slate-600">Intl Students</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-[#283887] mb-2">{stats.newsArticles || 0}</div>
