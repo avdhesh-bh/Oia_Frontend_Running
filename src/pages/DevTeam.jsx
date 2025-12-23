@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Users, Code, Globe, Heart } from 'lucide-react';
+import { Button } from '../components/ui/button';
+import { Users, Code, Globe, Heart, ExternalLink } from 'lucide-react';
 
 const DevTeam = () => {
   const teamMembers = [
@@ -10,6 +11,7 @@ const DevTeam = () => {
       role: 'Team Lead',
       description: 'Led the development of the OIA website with expertise in full-stack development and project management.',
       skills: ['React', 'Node.js', 'MongoDB', 'UI/UX Design'],
+      linkedin: 'https://www.linkedin.com/in/avdhesh-bhadoriya/',
       icon: <Code className="h-8 w-8" />
     }
   ];
@@ -56,13 +58,24 @@ const DevTeam = () => {
                 <p className="text-slate-600 mb-6 leading-relaxed">
                   {member.description}
                 </p>
-                <div className="flex flex-wrap gap-2 justify-center">
+                <div className="flex flex-wrap gap-2 justify-center mb-4">
                   {member.skills.map((skill, skillIndex) => (
                     <Badge key={skillIndex} variant="outline" className="text-xs">
                       {skill}
                     </Badge>
                   ))}
                 </div>
+                {member.linkedin && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full"
+                    onClick={() => window.open(member.linkedin, '_blank')}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    LinkedIn Profile
+                  </Button>
+                )}
               </CardContent>
             </Card>
           ))}
