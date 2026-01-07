@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Image as ImageIcon, Upload, X } from 'lucide-react';
+import { Image as ImageIcon, X } from 'lucide-react';
 import BaseForm from './BaseForm';
 
 const TeamMemberForm = ({
@@ -22,11 +22,20 @@ const TeamMemberForm = ({
     }
     return imageUrl;
   });
+  const [showUrlInput, setShowUrlInput] = useState(!!formData.imageUrl);
 
   // Update previewUrl when formData.imageUrl changes
   React.useEffect(() => {
     if (!formData.imageUrl) {
       setPreviewUrl('');
+      setShowUrlInput(false);
+      return;
+    }
+    
+    // If it's a data URL (from file upload), use it directly
+    if (formData.imageUrl.startsWith('data:')) {
+      setPreviewUrl(formData.imageUrl);
+      setShowUrlInput(false); // Hide URL input for file uploads
       return;
     }
     
@@ -39,6 +48,7 @@ const TeamMemberForm = ({
     
     // Add cache-busting timestamp to prevent caching issues
     setPreviewUrl(`${imageUrl}?t=${Date.now()}`);
+    setShowUrlInput(true); // Show URL input for URL-based images
   }, [formData.imageUrl]);
 
   const handleChange = (e) => {
@@ -50,6 +60,10 @@ const TeamMemberForm = ({
     
     if (id === 'imageUrl') {
       setPreviewUrl(value);
+      // If user starts typing in URL field, keep the input visible
+      if (value && value.trim()) {
+        setShowUrlInput(true);
+      }
     }
   };
 
@@ -80,6 +94,7 @@ const TeamMemberForm = ({
           imageFile: file, // Store the actual File object
           imageUrl: reader.result // Store data URL for preview
         }));
+        setShowUrlInput(false); // Hide URL input when file is uploaded
       };
       reader.onerror = () => {
         console.error('Error reading file');
@@ -90,10 +105,6 @@ const TeamMemberForm = ({
   };
 
   const removeImage = () => {
-    console.log('=== IMAGE REMOVAL DEBUG ===');
-    console.log('Before removal - formData.imageUrl:', formData.imageUrl);
-    console.log('Before removal - previewUrl:', previewUrl);
-    
     setPreviewUrl('');
     setFormData(prev => {
       const newData = {
@@ -101,17 +112,15 @@ const TeamMemberForm = ({
         imageFile: null,
         imageUrl: ''
       };
-      console.log('After removal - new formData.imageUrl:', newData.imageUrl);
       return newData;
     });
+    setShowUrlInput(false); // Hide URL input when image is removed
     
     // Reset file input
     const fileInput = document.getElementById('imageFile');
     if (fileInput) {
       fileInput.value = '';
     }
-    
-    console.log('=== END IMAGE REMOVAL DEBUG ===');
   };
 
   const triggerFileInput = () => {
@@ -181,28 +190,58 @@ const TeamMemberForm = ({
             </div>
           </div>
           
-          <div className="mt-2">
-            <p className="text-xs text-gray-500 text-center">
-              Or enter image URL
-            </p>
-            <div className="mt-1 flex rounded-md shadow-sm">
-              <input
-                type="url"
-                id="imageUrl"
-                value={formData.imageUrl || ''}
-                onChange={handleChange}
-                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
-                placeholder="https://example.com/photo.jpg"
-              />
+          {/* Show URL input section when there's an image URL (but not for file uploads) */}
+          {formData.imageUrl && !formData.imageUrl.startsWith('data:') && (
+            <div className="mt-2">
+              <p className="text-xs text-gray-500 text-center">
+                Image URL:
+              </p>
+              <div className="mt-1">
+                <input
+                  type="url"
+                  id="imageUrl"
+                  value={formData.imageUrl || ''}
+                  onChange={handleChange}
+                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border-gray-300"
+                  placeholder="https://example.com/photo.jpg"
+                  readOnly
+                />
+              </div>
+            </div>
+          )}
+          
+          {/* Show "Add URL" button when there's no image and URL input is hidden */}
+          {!previewUrl && !formData.imageUrl && !showUrlInput && (
+            <div className="mt-2 text-center">
               <button
                 type="button"
-                onClick={() => setPreviewUrl(formData.imageUrl)}
-                className="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={() => setShowUrlInput(true)}
+                className="inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                <Upload className="h-4 w-4 mr-1" /> Preview
+                Add Image URL Instead
               </button>
             </div>
-          </div>
+          )}
+          
+          {/* Show URL input when user clicks "Add Image URL Instead" */}
+          {showUrlInput && !formData.imageUrl && (
+            <div className="mt-2">
+              <p className="text-xs text-gray-500 text-center">
+                Enter image URL:
+              </p>
+              <div className="mt-1">
+                <input
+                  type="url"
+                  id="imageUrl"
+                  value={formData.imageUrl || ''}
+                  onChange={handleChange}
+                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border-gray-300"
+                  placeholder="https://example.com/photo.jpg"
+                  autoFocus
+                />
+              </div>
+            </div>
+          )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>

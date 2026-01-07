@@ -29,10 +29,25 @@ const GalleryFormPage = () => {
       const loadGalleryItem = async () => {
         try {
           const item = await adminAPI.getGalleryImageById(id);
+          
+          // Helper function to construct full image URL (same as Gallery component)
+          const getImageUrl = (imagePath) => {
+            if (!imagePath) return '';
+            
+            // If it's already a full URL (starts with http), return as is
+            if (imagePath.startsWith('http')) {
+              return imagePath;
+            }
+            
+            // Otherwise, construct the full URL using the backend API base URL
+            const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+            return `${baseUrl}${imagePath}`;
+          };
+          
           setFormData({
             title: item.title || '',
             description: item.description || '',
-            imageUrl: item.image || '',
+            imageUrl: getImageUrl(item.image), // Use full URL for editing
             category: item.category || '',
             order: item.order || 0,
             isFeatured: item.is_featured || false,
@@ -63,9 +78,9 @@ const GalleryFormPage = () => {
           throw new Error('Invalid file selected');
         }
         formDataToSend.append('file', formData.imageFile);
-      } else if (formData.imageUrl) {
-        // Handle image URL if provided
-        formDataToSend.append('image_url', formData.imageUrl);
+      } else if (formData.imageUrl && formData.imageUrl.trim()) {
+        // Handle image URL if provided and not empty
+        formDataToSend.append('image_url', formData.imageUrl.trim());
       } else {
         throw new Error('Please provide either an image file or an image URL');
       }
