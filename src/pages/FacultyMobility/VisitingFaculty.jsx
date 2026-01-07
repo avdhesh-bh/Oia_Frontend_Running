@@ -32,7 +32,7 @@ const VisitingFaculty = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold text-[#283887] mb-4">Visiting Faculty Program</h1>
           <p className="text-xl text-slate-600 mb-8">
-            International faculty members are welcome to visit Medi-Caps University for teaching, 
+            International faculty members are welcome to visit Medicaps University for teaching, 
             research collaboration, and academic exchange.
           </p>
 

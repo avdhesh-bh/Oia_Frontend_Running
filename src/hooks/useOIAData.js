@@ -42,7 +42,8 @@ export const useTeam = () => {
   return useQuery({
     queryKey: ['team'],
     queryFn: () => publicAPI.getTeam(),
-    staleTime: 10 * 60 * 1000, // Team changes less frequently
+    staleTime: 30 * 1000, // Reduced to 30 seconds for testing
+    cacheTime: 60 * 1000, // Cache for 1 minute
   });
 };
 

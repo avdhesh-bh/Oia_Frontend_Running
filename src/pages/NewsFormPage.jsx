@@ -47,14 +47,20 @@ const NewsFormPage = () => {
   }, [id, isEditMode, navigate]);
 
   const toBackendNewsPayload = (data) => {
-    return {
+    const payload = {
       title: data.title,
       category: data.category,
       content: data.content,
       date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
-      image: data.imageUrl || undefined,
       featured: !!data.isFeatured,
     };
+    
+    // Only include image if it has a value
+    if (data.imageUrl && data.imageUrl.trim() !== '') {
+      payload.image = data.imageUrl;
+    }
+    
+    return payload;
   };
 
   const handleSubmit = async (e) => {

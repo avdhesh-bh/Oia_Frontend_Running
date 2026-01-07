@@ -52,7 +52,7 @@ const FacultyMobility = () => {
   return (
     <>
       <Helmet>
-        <title>Faculty Mobility & Research | OIA - Medi-Caps University</title>
+        <title>Faculty Mobility & Research | OIA - Medicaps University</title>
         <meta name="description" content="Explore faculty exchange programs, research collaborations, grants, and international opportunities for faculty members." />
       </Helmet>
 

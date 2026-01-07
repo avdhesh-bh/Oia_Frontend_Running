@@ -25,7 +25,7 @@ const Orientation = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold text-[#283887] mb-4">International Student Orientation</h1>
           <p className="text-xl text-slate-600 mb-12">
-            Welcome to Medi-Caps University! Our comprehensive orientation program helps you settle in smoothly.
+            Welcome to Medicaps University! Our comprehensive orientation program helps you settle in smoothly.
           </p>
 
           <Card className="mb-8">

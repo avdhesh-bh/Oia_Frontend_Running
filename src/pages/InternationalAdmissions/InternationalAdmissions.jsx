@@ -48,8 +48,8 @@ const InternationalAdmissions = () => {
   return (
     <>
       <Helmet>
-        <title>International Admissions | OIA - Medi-Caps University</title>
-        <meta name="description" content="Apply to Medi-Caps University as an international student. Explore programs, admission process, fees, scholarships, and visa requirements." />
+        <title>International Admissions | OIA - Medicaps University</title>
+        <meta name="description" content="Apply to Medicaps University as an international student. Explore programs, admission process, fees, scholarships, and visa requirements." />
       </Helmet>
 
       <div className="min-h-screen bg-slate-50 py-12">
@@ -57,14 +57,14 @@ const InternationalAdmissions = () => {
           <div className="mb-12">
             <h1 className="text-4xl font-bold text-[#283887] mb-4">International Admissions</h1>
             <p className="text-xl text-slate-600 max-w-3xl">
-              Welcome to Medi-Caps University! Join our diverse community of international students 
+              Welcome to Medicaps University! Join our diverse community of international students 
               and experience world-class education in India.
             </p>
           </div>
 
           {/* Why Medi-Caps Section */}
           <div className="bg-white rounded-lg shadow-sm p-8 mb-12">
-            <h2 className="text-3xl font-bold text-[#283887] mb-6">Why Choose Medi-Caps University?</h2>
+            <h2 className="text-3xl font-bold text-[#283887] mb-6">Why Choose Medicaps University?</h2>
             {whyMediCaps ? (
               <div className="prose prose-slate max-w-none">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -111,7 +111,7 @@ const InternationalAdmissions = () => {
           <div className="bg-gradient-to-r from-[#283887] to-[#A21D2E] rounded-lg p-8 text-white text-center">
             <h2 className="text-3xl font-bold mb-4">Ready to Apply?</h2>
             <p className="text-white/90 mb-6 text-lg">
-              Start your journey at Medi-Caps University today. Our admissions team is here to help you every step of the way.
+              Start your journey at Medicaps University today. Our admissions team is here to help you every step of the way.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-[#283887] hover:bg-slate-100">

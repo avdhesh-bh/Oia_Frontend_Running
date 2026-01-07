@@ -74,7 +74,7 @@ const PartnerWithUs = () => {
             <Handshake className="h-12 w-12 text-[#283887] mx-auto mb-4" />
             <h1 className="text-4xl font-bold text-[#283887] mb-4">Partner with Us</h1>
             <p className="text-xl text-slate-600">
-              Interested in establishing a partnership with Medi-Caps University? Submit your proposal below.
+              Interested in establishing a partnership with Medicaps University? Submit your proposal below.
             </p>
           </div>
 

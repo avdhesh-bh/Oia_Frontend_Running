@@ -22,7 +22,7 @@ const PreArrival = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold text-[#283887] mb-4">Pre-arrival Checklist</h1>
           <p className="text-xl text-slate-600 mb-12">
-            Essential checklist to ensure a smooth arrival and transition to Medi-Caps University.
+            Essential checklist to ensure a smooth arrival and transition to Medicaps University.
           </p>
 
           <div className="space-y-6">

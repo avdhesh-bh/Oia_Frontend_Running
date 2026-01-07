@@ -21,7 +21,7 @@ const DualDegrees = () => {
               <h1 className="text-4xl font-bold text-[#283887]">Dual/Joint Degree Programs</h1>
             </div>
             <p className="text-xl text-slate-600">
-              Earn degrees from both Medi-Caps University and our international partner institutions.
+              Earn degrees from both Medicaps University and our international partner institutions.
             </p>
           </div>
 

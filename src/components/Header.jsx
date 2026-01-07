@@ -195,7 +195,7 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-2 hover:opacity-90 transition-opacity">
             <img
               src="https://www.medicaps.ac.in/public/frontend/images/logo.png"
-              alt="Medi-Caps University"
+              alt="Medicaps University"
               className="h-10 px-1.5 w-auto"
               style={{marginLeft:0,paddingLeft:0}}
               onError={(e) => {

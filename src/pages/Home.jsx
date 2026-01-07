@@ -22,11 +22,28 @@ const Home = () => {
   const team = teamData?.items || teamData || [];
   const faqs = faqsData?.items || faqsData || [];
 
+  // Helper function to construct full image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    
+    // If it's already a full URL (starts with http), return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Otherwise, construct the full URL using the backend API base URL
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+    const fullUrl = `${baseUrl}${imagePath}`;
+    
+    // Add cache-busting timestamp to prevent showing cached/removed images
+    return `${fullUrl}?t=${Date.now()}`;
+  };
+
   return (
     <>
       <Helmet>
-        <title>Home | Office of International Affairs - Medi-Caps University</title>
-        <meta name="description" content="Medi-Caps University Office of International Affairs - Your gateway to global education, student exchange programs, and international partnerships." />
+        <title>Home | Office of International Affairs - Medicaps University</title>
+        <meta name="description" content="Medicaps University Office of International Affairs - Your gateway to global education, student exchange programs, and international partnerships." />
       </Helmet>
 
       <div className="min-h-screen">
@@ -446,7 +463,21 @@ const Home = () => {
                   {team.slice(0, 8).map((member) => (
                     <Card key={member.id} className="text-center hover:shadow-lg transition-shadow">
                       <CardContent className="pt-6 pb-6">
-                        <div className="w-20 h-20 bg-gradient-to-br from-[#283887] to-[#3B82F6] rounded-full flex items-center justify-center mx-auto mb-4 text-white text-xl font-semibold">
+                        {member.image ? (
+                          <img
+                            src={getImageUrl(member.image)}
+                            alt={member.name}
+                            className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextElementSibling.style.display = 'flex';
+                            }}
+                          />
+                        ) : null}
+                        <div 
+                          className="w-20 h-20 bg-gradient-to-br from-[#283887] to-[#3B82F6] rounded-full flex items-center justify-center mx-auto mb-4 text-white text-xl font-semibold"
+                          style={{ display: member.image ? 'none' : 'flex' }}
+                        >
                           {member.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
                         </div>
                         <h3 className="text-lg font-semibold text-slate-900 mb-2">{member.name}</h3>

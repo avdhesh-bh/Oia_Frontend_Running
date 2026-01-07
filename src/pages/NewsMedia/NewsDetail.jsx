@@ -14,6 +14,20 @@ const NewsDetail = () => {
   const { id } = useParams();
   const { data: news, isLoading, error } = useNewsById(id);
 
+  // Helper function to construct full image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    
+    // If it's already a full URL (starts with http), return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Otherwise, construct the full URL using the backend API base URL
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+    return `${baseUrl}${imagePath}`;
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -72,7 +86,7 @@ const NewsDetail = () => {
             {news.image && (
               <div className="relative h-64 md:h-96 overflow-hidden">
                 <img
-                  src={news.image}
+                  src={getImageUrl(news.image)}
                   alt={news.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {

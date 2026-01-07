@@ -16,12 +16,26 @@ const EventCard = ({ event }) => {
 
   const isUpcoming = new Date(event.startDate) > new Date();
 
+  // Helper function to construct full image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return 'https://via.placeholder.com/400x200/283887/ffffff?text=Event';
+    
+    // If it's already a full URL (starts with http), return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Otherwise, construct the full URL using the backend API base URL
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+    return `${baseUrl}${imagePath}`;
+  };
+
   return (
     <Card className="h-full flex flex-col hover:shadow-lg transition-shadow">
       {event.images && event.images.length > 0 && (
         <div className="relative h-48 overflow-hidden rounded-t-lg">
           <img
-            src={event.images[0]}
+            src={getImageUrl(event.images[0])}
             alt={event.title}
             className="w-full h-full object-cover"
             onError={(e) => {

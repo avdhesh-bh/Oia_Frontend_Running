@@ -41,7 +41,7 @@ const Search = () => {
   return (
     <>
       <Helmet>
-        <title>Search | OIA - Medi-Caps University</title>
+        <title>Search | OIA - Medicaps University</title>
         <meta name="description" content="Search across programs, news, events, and partnerships." />
       </Helmet>
 

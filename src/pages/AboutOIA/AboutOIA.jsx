@@ -36,14 +36,14 @@ const AboutOIA = () => {
   return (
     <>
       <Helmet>
-        <title>About OIA | Office of International Affairs - Medi-Caps University</title>
+        <title>About OIA | Office of International Affairs - Medicaps University</title>
       </Helmet>
       <div className="min-h-screen bg-slate-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold text-[#283887] mb-4">About OIA</h1>
           <p className="text-xl text-slate-600 mb-12">
             The Office of International Affairs (OIA) serves as the central hub for all international activities,
-            partnerships, and student mobility programs at Medi-Caps University.
+            partnerships, and student mobility programs at Medicaps University.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {sections.map((section) => {

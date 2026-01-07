@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Image as ImageIcon, Upload, X } from 'lucide-react';
 import BaseForm from './BaseForm';
 
 const TeamMemberForm = ({
@@ -12,12 +13,109 @@ const TeamMemberForm = ({
   submitting,
   isEdit = false
 }) => {
+  const [previewUrl, setPreviewUrl] = useState(() => {
+    // Set initial preview URL with full path construction
+    let imageUrl = formData.imageUrl || '';
+    if (imageUrl && !imageUrl.startsWith('http')) {
+      const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+      imageUrl = `${baseUrl}${imageUrl}`;
+    }
+    return imageUrl;
+  });
+
+  // Update previewUrl when formData.imageUrl changes
+  React.useEffect(() => {
+    if (!formData.imageUrl) {
+      setPreviewUrl('');
+      return;
+    }
+    
+    // Construct full URL if it's a relative path
+    let imageUrl = formData.imageUrl;
+    if (!imageUrl.startsWith('http')) {
+      const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+      imageUrl = `${baseUrl}${imageUrl}`;
+    }
+    
+    // Add cache-busting timestamp to prevent caching issues
+    setPreviewUrl(`${imageUrl}?t=${Date.now()}`);
+  }, [formData.imageUrl]);
+
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
       [id]: type === 'checkbox' ? checked : value
     }));
+    
+    if (id === 'imageUrl') {
+      setPreviewUrl(value);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        alert('Please select a valid image file (JPEG, PNG, GIF, or WebP)');
+        e.target.value = ''; // Reset the file input
+        return;
+      }
+
+      // Validate file size (5MB max)
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxSize) {
+        alert('Image size should be less than 5MB');
+        e.target.value = ''; // Reset the file input
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+        setFormData(prev => ({
+          ...prev,
+          imageFile: file, // Store the actual File object
+          imageUrl: reader.result // Store data URL for preview
+        }));
+      };
+      reader.onerror = () => {
+        console.error('Error reading file');
+        alert('Error reading file. Please try another image.');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    console.log('=== IMAGE REMOVAL DEBUG ===');
+    console.log('Before removal - formData.imageUrl:', formData.imageUrl);
+    console.log('Before removal - previewUrl:', previewUrl);
+    
+    setPreviewUrl('');
+    setFormData(prev => {
+      const newData = {
+        ...prev,
+        imageFile: null,
+        imageUrl: ''
+      };
+      console.log('After removal - new formData.imageUrl:', newData.imageUrl);
+      return newData;
+    });
+    
+    // Reset file input
+    const fileInput = document.getElementById('imageFile');
+    if (fileInput) {
+      fileInput.value = '';
+    }
+    
+    console.log('=== END IMAGE REMOVAL DEBUG ===');
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById('imageFile').click();
   };
   
   const handleSelectChange = (field, value) => {
@@ -36,6 +134,76 @@ const TeamMemberForm = ({
       submitting={submitting}
     >
       <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Profile Photo</label>
+          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md">
+            <div className="space-y-1 text-center">
+              {previewUrl ? (
+                <div className="relative">
+                  <img
+                    src={previewUrl}
+                    alt="Profile Preview"
+                    className="h-32 w-32 mx-auto rounded-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={removeImage}
+                    className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white hover:bg-red-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                  <div className="mt-2 text-xs text-green-600">Image loaded - Click X to remove</div>
+                </div>
+              ) : (
+                <>
+                  <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
+                  <div className="flex text-sm text-gray-600">
+                    <label
+                      htmlFor="imageFile"
+                      className="relative cursor-pointer font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-3 py-2 border border-indigo-600 rounded-md hover:bg-indigo-50"
+                    >
+                      <span>Upload a file</span>
+                      <input
+                        id="imageFile"
+                        name="imageFile"
+                        type="file"
+                        className="sr-only"
+                        onChange={handleFileChange}
+                        accept="image/*"
+                      />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
+                  </div>
+                  <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                  {formData.imageUrl === '' && <div className="mt-2 text-xs text-orange-600 font-semibold">Image will be removed on save</div>}
+                </>
+              )}
+            </div>
+          </div>
+          
+          <div className="mt-2">
+            <p className="text-xs text-gray-500 text-center">
+              Or enter image URL
+            </p>
+            <div className="mt-1 flex rounded-md shadow-sm">
+              <input
+                type="url"
+                id="imageUrl"
+                value={formData.imageUrl || ''}
+                onChange={handleChange}
+                className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
+                placeholder="https://example.com/photo.jpg"
+              />
+              <button
+                type="button"
+                onClick={() => setPreviewUrl(formData.imageUrl)}
+                className="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                <Upload className="h-4 w-4 mr-1" /> Preview
+              </button>
+            </div>
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="firstName" className="block text-sm font-medium mb-1">First Name *</label>
@@ -132,16 +300,6 @@ const TeamMemberForm = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="imageUrl" className="block text-sm font-medium mb-1">Profile Photo URL</label>
-            <Input
-              id="imageUrl"
-              type="url"
-              value={formData.imageUrl || ''}
-              onChange={handleChange}
-              placeholder="https://example.com/photo.jpg"
-            />
-          </div>
-          <div>
             <label htmlFor="order" className="block text-sm font-medium mb-1">Display Order</label>
             <Input
               id="order"
@@ -161,7 +319,10 @@ const TeamMemberForm = ({
                 type="checkbox"
                 id="isLeadership"
                 checked={!!formData.isLeadership}
-                onChange={(e) => setFormData(prev => ({ ...prev, isLeadership: e.target.checked }))}
+                onChange={(e) => {
+                  console.log('Leadership checkbox clicked:', e.target.checked);
+                  setFormData(prev => ({ ...prev, isLeadership: e.target.checked }));
+                }}
                 className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
               />
               <span className="text-sm font-medium text-gray-700">Leadership Team</span>
@@ -172,7 +333,7 @@ const TeamMemberForm = ({
               <input
                 type="checkbox"
                 id="isActive"
-                checked={formData.isActive !== false}
+                checked={!!formData.isActive}
                 onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
                 className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
               />

@@ -89,7 +89,7 @@ const CulturalEngagement = () => {
               <h3 className="text-2xl font-bold mb-2">Join Our Community</h3>
               <p className="text-white/90 mb-4">
                 Connect with students from around the world and experience the rich cultural diversity 
-                at Medi-Caps University.
+                at Medicaps University.
               </p>
               <a href="/contact" className="inline-block px-6 py-3 bg-white text-[#283887] rounded-lg font-medium hover:bg-slate-100 transition-colors">
                 Get Involved

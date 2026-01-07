@@ -8,6 +8,20 @@ import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar'
 const ContactDirectory = () => {
   const { data: team, isLoading } = useTeam();
 
+  // Helper function to construct full image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    
+    // If it's already a full URL (starts with http), return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Otherwise, construct the full URL using the backend API base URL
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+    return `${baseUrl}${imagePath}`;
+  };
+
   const contactInfo = {
     office: "Office of International Affairs",
     address: "A.B. Road Pigdamber, Rau, Indore, Madhya Pradesh 453331",
@@ -76,7 +90,7 @@ const ContactDirectory = () => {
                   <CardHeader>
                     <div className="flex items-center gap-4 mb-4">
                       <Avatar className="h-16 w-16">
-                        <AvatarImage src={member.image} alt={member.name} />
+                        <AvatarImage src={getImageUrl(member.image)} alt={member.name} />
                         <AvatarFallback>{member.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                       </Avatar>
                       <div>

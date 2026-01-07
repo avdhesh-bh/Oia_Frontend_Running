@@ -441,7 +441,7 @@ const ContactMessages = () => {
 
               <div className="flex space-x-3 pt-4">
                 <Button asChild className="flex-1 bg-blue-600 hover:bg-blue-700">
-                  <a href={`mailto:${selectedContact.email}?subject=Re: ${selectedContact.subject}&body=Hello ${selectedContact.firstName},%0D%0A%0D%0AThank you for your inquiry about our exchange programs.%0D%0A%0D%0ABest regards,%0D%0AOffice of International Affairs%0D%0AMedi-Caps University`}>
+                  <a href={`mailto:${selectedContact.email}?subject=Re: ${selectedContact.subject}&body=Hello ${selectedContact.firstName},%0D%0A%0D%0AThank you for your inquiry about our exchange programs.%0D%0A%0D%0ABest regards,%0D%0AOffice of International Affairs%0D%0AMedicaps University`}>
                     <Mail className="h-4 w-4 mr-2" />
                     Reply via Email
                   </a>

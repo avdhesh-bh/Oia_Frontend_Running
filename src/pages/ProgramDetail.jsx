@@ -60,7 +60,7 @@ const ProgramDetail = () => {
       vision: program.vision || "To create globally competent professionals who can contribute to society with international outlook, cultural sensitivity, and advanced academic knowledge.",
       
       benefits: program.benefits && program.benefits.length > 0 ? program.benefits : [
-        "Credit Transfer: All academic credits earned abroad will be transferred and recognized by Medi-Caps University",
+        "Credit Transfer: All academic credits earned abroad will be transferred and recognized by Medicaps University",
         "International Exposure: Experience different teaching methodologies and academic systems",
         "Career Impact: Enhanced employability with international experience and global network",
         "Cultural Learning: Deep immersion in different cultures and languages",

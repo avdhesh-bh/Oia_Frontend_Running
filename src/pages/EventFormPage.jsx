@@ -85,16 +85,23 @@ const EventFormPage = () => {
         type: formData.type,
         startDate: new Date(formData.startDate).toISOString(),
         endDate: new Date(formData.endDate).toISOString(),
-        location: formData.location || '',
-        registrationLink: formData.registrationUrl || '',
         featured: formData.isFeatured || false,
         published: formData.isPublished !== false,
         // Add default values for required fields
         organizer: formData.organizer || 'OIA',
         status: formData.status || 'Scheduled',
-        // Handle image if present
-        ...(formData.imageUrl && { imageUrl: formData.imageUrl })
       };
+      
+      // Only include optional fields if they have values
+      if (formData.location && formData.location.trim() !== '') {
+        eventData.location = formData.location;
+      }
+      if (formData.registrationUrl && formData.registrationUrl.trim() !== '') {
+        eventData.registrationLink = formData.registrationUrl;
+      }
+      if (formData.imageUrl && formData.imageUrl.trim() !== '') {
+        eventData.images = [formData.imageUrl]; // Events expect images array
+      }
       
       if (isEditMode) {
         await adminAPI.updateEvent(id, eventData);

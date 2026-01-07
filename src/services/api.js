@@ -15,6 +15,10 @@ const apiClient = axios.create({
   },
 });
 
+// Debug: Log the actual API URL being used
+console.log('🔗 API Base URL:', `${process.env.REACT_APP_API_URL}/api`);
+console.log('🔗 Environment REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
+
 
 // Add a request interceptor to handle different content types
 apiClient.interceptors.request.use(
@@ -864,7 +868,19 @@ export const adminAPI = {
   createTeamMember: async (memberData) => {
     try {
       const headers = adminAPI.getAuthHeaders();
-      const response = await apiClient.post('/admin/team', memberData, { headers });
+      const config = {
+        headers: {
+          ...headers,
+          'Accept': 'application/json',
+        },
+        transformRequest: (data, headers) => {
+          // Let the browser set boundary for FormData
+          delete headers['Content-Type'];
+          return data;
+        }
+      };
+
+      const response = await apiClient.post('/admin/team', memberData, config);
       return response.data;
     } catch (error) {
       console.error('Error creating team member:', error);
@@ -881,7 +897,19 @@ export const adminAPI = {
   updateTeamMember: async (memberId, memberData) => {
     try {
       const headers = adminAPI.getAuthHeaders();
-      const response = await apiClient.put(`/admin/team/${memberId}`, memberData, { headers });
+      const config = {
+        headers: {
+          ...headers,
+          'Accept': 'application/json',
+        },
+        transformRequest: (data, headers) => {
+          // Let the browser set boundary for FormData
+          delete headers['Content-Type'];
+          return data;
+        }
+      };
+
+      const response = await apiClient.put(`/admin/team/${memberId}`, memberData, config);
       return response.data;
     } catch (error) {
       console.error('Error updating team member:', error);

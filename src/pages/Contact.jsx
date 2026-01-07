@@ -206,7 +206,7 @@ const Contact = () => {
                   className="flex items-center p-3 rounded-lg hover:bg-blue-50 transition-colors group"
                 >
                   <MessageSquare className="h-5 w-5 text-blue-600 mr-3" />
-                  <span className="text-slate-700 group-hover:text-blue-600">Medi-Caps University</span>
+                  <span className="text-slate-700 group-hover:text-blue-600">Medicaps University</span>
                 </a>
               </CardContent>
             </Card>

@@ -14,6 +14,20 @@ const EventDetail = () => {
   const { id } = useParams();
   const { data: event, isLoading, error } = useEventById(id);
 
+  // Helper function to construct full image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    
+    // If it's already a full URL (starts with http), return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Otherwise, construct the full URL using the backend API base URL
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+    return `${baseUrl}${imagePath}`;
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -75,7 +89,7 @@ const EventDetail = () => {
             {event.images && event.images.length > 0 && (
               <div className="relative h-64 md:h-96 overflow-hidden">
                 <img
-                  src={event.images[0]}
+                  src={getImageUrl(event.images[0])}
                   alt={event.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
@@ -182,10 +196,10 @@ const EventDetail = () => {
                     {event.images.slice(1).map((image, idx) => (
                       <img
                         key={idx}
-                        src={image}
+                        src={getImageUrl(image)}
                         alt={`${event.title} - Image ${idx + 2}`}
                         className="w-full h-32 object-cover rounded-lg hover:opacity-90 transition-opacity cursor-pointer"
-                        onClick={() => window.open(image, '_blank')}
+                        onClick={() => window.open(getImageUrl(image), '_blank')}
                       />
                     ))}
                   </div>

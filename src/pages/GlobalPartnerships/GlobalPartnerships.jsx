@@ -79,7 +79,7 @@ const GlobalPartnerships = () => {
   return (
     <>
       <Helmet>
-        <title>Global Partnerships | Office of International Affairs - Medi-Caps University</title>
+        <title>Global Partnerships | Office of International Affairs - Medicaps University</title>
         <meta name="description" content="Explore our strategic partnerships, MoUs, research collaborations, and dual degree programs with universities worldwide." />
       </Helmet>
 

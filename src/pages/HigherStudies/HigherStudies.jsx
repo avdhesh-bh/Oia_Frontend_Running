@@ -42,7 +42,7 @@ const HigherStudies = () => {
   return (
     <>
       <Helmet>
-        <title>Higher Studies & Global Opportunities | OIA - Medi-Caps University</title>
+        <title>Higher Studies & Global Opportunities | OIA - Medicaps University</title>
         <meta name="description" content="Resources and support for students pursuing higher studies abroad, including scholarships, LOR support, and ECTS conversion." />
       </Helmet>
 

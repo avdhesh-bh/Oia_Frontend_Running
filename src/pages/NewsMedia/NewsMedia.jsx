@@ -76,7 +76,7 @@ const NewsMedia = () => {
   return (
     <>
       <Helmet>
-        <title>News & Media | Office of International Affairs - Medi-Caps University</title>
+        <title>News & Media | Office of International Affairs - Medicaps University</title>
         <meta name="description" content="Stay updated with the latest news, announcements, MoU signings, achievements, and press releases from the Office of International Affairs." />
       </Helmet>
 

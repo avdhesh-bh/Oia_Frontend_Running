@@ -10,6 +10,20 @@ const Gallery = () => {
   const [category, setCategory] = useState('all');
   const { data, isLoading, error } = useGallery({ category: category === 'all' ? undefined : category, page: 1, page_size: 50 });
 
+  // Helper function to construct full image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return 'https://via.placeholder.com/400x300/283887/ffffff?text=Image';
+    
+    // If it's already a full URL (starts with http), return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Otherwise, construct the full URL using the backend API base URL
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+    return `${baseUrl}${imagePath}`;
+  };
+
   const breakpointColumnsObj = {
     default: 4,
     1100: 3,
@@ -92,7 +106,7 @@ const Gallery = () => {
                   >
                     <div className="relative overflow-hidden rounded-lg">
                       <img
-                        src={item.image}
+                        src={getImageUrl(item.image)}
                         alt={item.caption || item.alt}
                         className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
                         onError={(e) => {
@@ -119,7 +133,7 @@ const Gallery = () => {
                 >
                   <div className="max-w-4xl max-h-full">
                     <img
-                      src={selectedImage.image}
+                      src={getImageUrl(selectedImage.image)}
                       alt={selectedImage.caption || selectedImage.alt}
                       className="max-w-full max-h-[90vh] object-contain rounded-lg"
                     />

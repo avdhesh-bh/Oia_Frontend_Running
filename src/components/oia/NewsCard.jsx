@@ -13,12 +13,26 @@ const NewsCard = ({ news, featured = false }) => {
     'Press Release': 'bg-purple-100 text-purple-800',
   };
 
+  // Helper function to construct full image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return 'https://via.placeholder.com/400x200/283887/ffffff?text=News';
+    
+    // If it's already a full URL (starts with http), return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Otherwise, construct the full URL using the backend API base URL
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+    return `${baseUrl}${imagePath}`;
+  };
+
   return (
     <Card className={`h-full flex flex-col hover:shadow-lg transition-shadow ${featured ? 'border-2 border-[#283887]' : ''}`}>
       {news.image && (
         <div className="relative h-48 overflow-hidden rounded-t-lg">
           <img
-            src={news.image}
+            src={getImageUrl(news.image)}
             alt={news.title}
             className="w-full h-full object-cover"
             onError={(e) => {

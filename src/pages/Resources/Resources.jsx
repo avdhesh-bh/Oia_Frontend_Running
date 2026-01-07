@@ -36,7 +36,7 @@ const Resources = () => {
   return (
     <>
       <Helmet>
-        <title>Resources & Systems | OIA - Medi-Caps University</title>
+        <title>Resources & Systems | OIA - Medicaps University</title>
         <meta name="description" content="Access OIA resources including SOPs, forms, FAQs, and contact directory." />
       </Helmet>
 

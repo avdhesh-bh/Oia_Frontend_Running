@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="flex items-center space-x-2">
               <img 
                 src="https://www.medicaps.ac.in/public/frontend/images/logo.png" 
-                alt="Medi-Caps University" 
+                alt="Medicaps University" 
                 className="h-10 w-auto filter brightness-0 invert"
                 onError={(e) => {
                   e.target.src = "https://via.placeholder.com/100x40/ffffff/1e40af?text=MEDICAPS";
@@ -19,7 +19,7 @@ const Footer = () => {
               />
               <Globe className="h-6 w-6 text-blue-400" />
             </div>
-            <h3 className="text-xl font-bold">Medi-Caps University</h3>
+            <h3 className="text-xl font-bold">Medicaps University</h3>
             <p className="text-slate-300 text-sm leading-relaxed">
               Office of International Affairs - Connecting students to global opportunities 
               through world-class exchange programs and international partnerships.
@@ -37,7 +37,7 @@ const Footer = () => {
               <li>
                 <a href="https://www.medicaps.ac.in" target="_blank" rel="noopener noreferrer" 
                    className="text-slate-300 hover:text-white transition-colors text-sm">
-                  Medi-Caps University
+                  Medicaps University
                 </a>
               </li>
               <li>
@@ -90,7 +90,7 @@ const Footer = () => {
 
         <div className="border-t border-slate-700 mt-8 pt-8 text-center">
           <p className="text-slate-400 text-sm">
-            © 2025 Medi-Caps University - Office of International Affairs. All rights reserved.
+            © 2025 Medicaps University - Office of International Affairs. All rights reserved.
           </p>
         </div>
       </div>

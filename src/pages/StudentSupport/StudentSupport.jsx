@@ -42,7 +42,7 @@ const StudentSupport = () => {
   return (
     <>
       <Helmet>
-        <title>International Student Support | OIA - Medi-Caps University</title>
+        <title>International Student Support | OIA - Medicaps University</title>
         <meta name="description" content="Comprehensive support services for international students including pre-arrival, orientation, housing, health, and cultural engagement." />
       </Helmet>
 
@@ -51,7 +51,7 @@ const StudentSupport = () => {
           <div className="mb-12">
             <h1 className="text-4xl font-bold text-[#283887] mb-4">International Student Support</h1>
             <p className="text-xl text-slate-600 max-w-3xl">
-              We're committed to ensuring your smooth transition and success at Medi-Caps University. 
+              We're committed to ensuring your smooth transition and success at Medicaps University. 
               From pre-arrival to graduation, we're here to support you every step of the way.
             </p>
           </div>

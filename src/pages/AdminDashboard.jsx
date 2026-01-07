@@ -28,6 +28,20 @@ const AdminDashboard = () => {
   const [statsConfigLoading, setStatsConfigLoading] = useState(false);
   const [statsConfigSaving, setStatsConfigSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Helper function to construct full image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return 'https://via.placeholder.com/400x300/283887/ffffff?text=Image';
+    
+    // If it's already a full URL (starts with http), return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Otherwise, construct the full URL using the backend API base URL
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+    return `${baseUrl}${imagePath}`;
+  };
   const [error, setError] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
@@ -322,6 +336,32 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleTogglePartnershipStatus = async (partnershipId, currentStatus) => {
+    let newStatus;
+    if (currentStatus === 'Active') {
+      newStatus = 'Under Negotiation';
+    } else if (currentStatus === 'Under Negotiation') {
+      newStatus = 'Expired';
+    } else {
+      newStatus = 'Active';
+    }
+    
+    const confirmMessage = `Are you sure you want to change partnership status from "${currentStatus}" to "${newStatus}"?`;
+    
+    if (!window.confirm(confirmMessage)) return;
+    
+    try {
+      await adminAPI.updatePartnership(partnershipId, { status: newStatus });
+      setPartnerships(partnerships.map(p => 
+        p.id === partnershipId ? { ...p, status: newStatus } : p
+      ));
+      toast.success(`Partnership status updated to ${newStatus}`);
+    } catch (err) {
+      console.error('Error toggling partnership status:', err);
+      toast.error('Failed to update partnership status. Please try again.');
+    }
+  };
+
   const handleDelete = async (type, id) => {
     if (!window.confirm(`Are you sure you want to delete this ${type}?`)) return;
     
@@ -560,7 +600,7 @@ const AdminDashboard = () => {
                 <TableRow>
                   <TableHead className="w-[35%]">Partner Name</TableHead>
                   <TableHead className="w-[15%] text-center">Type</TableHead>
-                  <TableHead className="w-[20%]">Country</TableHead>
+                  <TableHead className="w-[20%] text-center">Country</TableHead>
                   <TableHead className="w-[15%] text-center">Status</TableHead>
                   <TableHead className="w-[15%] text-center">Actions</TableHead>
                 </TableRow>
@@ -574,10 +614,21 @@ const AdminDashboard = () => {
                         <Badge variant="outline">{safeRender(item.type)}</Badge>
                       </div>
                     </TableCell>
-                    <TableCell className="truncate">{safeRender(item.country)}</TableCell>
+                    <TableCell className="truncate text-center">{safeRender(item.country)}</TableCell>
                     <TableCell className="truncate text-center">
-                      <div className="flex justify-center">
-                        <Badge>{safeRender(item.status)}</Badge>
+                      <div className="flex justify-center items-center gap-2">
+                        <Badge className={`${safeRender(item.status) === 'Active' ? 'bg-green-500' : safeRender(item.status) === 'Under Negotiation' ? 'bg-yellow-500' : 'bg-red-500'} text-white`}>
+                          {safeRender(item.status)}
+                        </Badge>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleTogglePartnershipStatus(item.id, safeRender(item.status))}
+                          className="h-6 w-6 p-0"
+                          title={`Change Status (Current: ${safeRender(item.status)})`}
+                        >
+                          <RefreshCw className="h-3 w-3" />
+                        </Button>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -728,7 +779,7 @@ const AdminDashboard = () => {
                 <Card key={item.id} className="relative group">
                   <div className="aspect-square overflow-hidden rounded-t-lg">
                     <img
-                      src={item.image}
+                      src={getImageUrl(item.image)}
                       alt={safeRender(item.title || item.alt)}
                       className="w-full h-full object-cover"
                       onError={(e) => {

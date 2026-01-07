@@ -58,7 +58,7 @@ const AdmissionProcess = () => {
     {
       step: 5,
       title: 'Arrival & Orientation',
-      description: 'Welcome to Medi-Caps University!',
+      description: 'Welcome to Medicaps University!',
       icon: CheckCircle,
       details: [
         'Airport pickup assistance',
@@ -79,7 +79,7 @@ const AdmissionProcess = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold text-[#283887] mb-4">Admission Process</h1>
           <p className="text-xl text-slate-600 mb-12">
-            Follow these simple steps to apply for admission at Medi-Caps University.
+            Follow these simple steps to apply for admission at Medicaps University.
           </p>
 
           <div className="space-y-8">
