@@ -81,42 +81,7 @@ const DevTeam = () => {
           ))}
         </div>
 
-        {/* Foundation Info */}
-        <Card className="bg-gradient-to-r from-[#283887]/10 to-[#A21D2E]/10 border-slate-200">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-slate-900 flex items-center justify-center">
-              <Heart className="h-6 w-6 mr-2 text-[#A21D2E]" />
-              MII Foundation
-            </CardTitle>
-            <CardDescription className="text-lg text-slate-600">
-              Empowering education through technology and innovation
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-center">
-            <p className="text-slate-700 leading-relaxed max-w-3xl mx-auto">
-              The MII Foundation is committed to transforming educational experiences through 
-              cutting-edge technology solutions. Our team works tirelessly to create platforms 
-              that bridge gaps in international education and foster global collaboration.
-            </p>
-            <div className="mt-6 flex justify-center space-x-8">
-              <div className="text-center">
-                <Globe className="h-8 w-8 text-[#283887] mx-auto mb-2" />
-                <div className="font-semibold text-slate-900">Global Impact</div>
-                <div className="text-sm text-slate-600">Worldwide Reach</div>
-              </div>
-              <div className="text-center">
-                <Code className="h-8 w-8 text-[#A21D2E] mx-auto mb-2" />
-                <div className="font-semibold text-slate-900">Innovation</div>
-                <div className="text-sm text-slate-600">Cutting-edge Tech</div>
-              </div>
-              <div className="text-center">
-                <Users className="h-8 w-8 text-[#283887] mx-auto mb-2" />
-                <div className="font-semibold text-slate-900">Collaboration</div>
-                <div className="text-sm text-slate-600">Team Excellence</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+       
       </div>
     </div>
   );
